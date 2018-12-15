@@ -24,14 +24,25 @@ public class MainFrame extends JFrame{
 
     private JMenuItem csvExportOption = new JMenuItem(".csv");
 
+    private static NorthPanel np = new NorthPanel();
+
     public MainFrame(){
 
         MainFrame();
+
+    }
+
+    public void addText(final String txt) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                fileMenu.setText(txt);
+            }
+        });
     }
 
     private void MainFrame(){
 
-        this.setTitle("Nuix USB Analysis " + version);
+        this.setTitle("Windows Media PLayer Extractor " + version);
 
         /**
          *  Add items to the main menu bar
@@ -61,7 +72,10 @@ public class MainFrame extends JFrame{
          */
         this.setJMenuBar(mainMenuBar);
 
-        add(new NorthPanel(), BorderLayout.CENTER);
+        /**
+         * Add the north panel
+         */
+        add(np, BorderLayout.CENTER);
 
         /**
          *  Run menu action listener
@@ -137,5 +151,9 @@ public class MainFrame extends JFrame{
         });
 
         pack();
+    }
+
+    public NorthPanel getNorthPanel(){
+        return np;
     }
 }

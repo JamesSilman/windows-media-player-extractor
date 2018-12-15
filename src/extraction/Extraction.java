@@ -3,17 +3,21 @@ package extraction;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Extraction {
 
     private RandomAccessFile fa;
     private String fileEntry;
+    private String fileSize;
+
     private long filePositionOffset;
     private long originalFilePointPosition;
+
     private ArrayList<Long> fileLocationOffsets = new ArrayList<Long>();
 
 
-    public String hexToASCII(int hex){
+    private String hexToASCII(int hex){
 
         String s = Integer.toHexString(hex);
         if(s.length() < 2){
@@ -23,7 +27,16 @@ public class Extraction {
         return s;
     }
 
-    public String hexConvertToString(String entry) throws Exception{
+    private void convertFileSize(String size) throws Exception {
+
+        //	BufferedReader buffRead = new BufferedReader(new InputStreamReader(System.in));
+        String temp = size;
+        long convertedSize = Long.parseLong(temp,16);
+        String cs = String.valueOf(convertedSize);
+        this.fileSize = cs;
+    }
+
+    private String hexConvertToString(String entry) throws Exception{
 
         String hex = entry;
 
@@ -38,7 +51,14 @@ public class Extraction {
         return string;
     }
 
-    public void extractPartialFileEntry(String fileLocation, long fileLocationOffset, long offsetJump, String searchUntil) throws Exception {
+    public String convertDateAndTime(String date) throws IOException, Exception {
+
+        long dateNumber = Long.parseLong(date,16);
+        Date convertedDate = new Date((dateNumber - 116444736000000000l) / 10000);
+        return String.valueOf(convertedDate);
+    }
+
+    public void extractPartialFileEntryUntil(String fileLocation, long fileLocationOffset, long offsetJump, String searchUntil) throws Exception {
 
         fa = new RandomAccessFile(fileLocation, "r");
 
@@ -56,12 +76,46 @@ public class Extraction {
 
         }while (tempByte !=0);
 
-        System.out.println(hexConvertToString(temp));
-
         this.fileEntry = hexConvertToString(temp);
         this.filePositionOffset = fa.getFilePointer();
 
-        System.out.println(getFilePositionOffset());
+        //System.out.println(getFilePositionOffset());
+    }
+
+    public String extractPartialFileEntryByLength(String fileLocation, long fileLocationOffset, long offsetJump, int readLength) throws Exception {
+
+        fa = new RandomAccessFile(fileLocation, "r");
+
+        fa.seek(fileLocationOffset + offsetJump);
+
+        String temp = "";
+        int tempByte;
+
+        for(int i = 0; i < readLength; i++){
+            tempByte = fa.readByte();
+            temp += hexToASCII(tempByte);
+        }
+
+        return temp;
+
+    }
+
+    public String extractPartialFileEntryByLengthByte(String fileLocation, long fileLocationOffset, long offsetJump, int readLength) throws Exception {
+
+        fa = new RandomAccessFile(fileLocation, "r");
+
+        fa.seek(fileLocationOffset + offsetJump);
+
+        String temp = "";
+
+        for(int i = 0; i < readLength; i++){
+            temp = hexToASCII(fa.read()) + temp;
+        }
+
+        convertFileSize(temp);
+
+        return temp;
+
     }
 
     public ArrayList<Long> findFileEntries(String fileLocation, String fileHeaderStartPoint, String fileHeaderRemaining) throws IOException {
@@ -97,5 +151,9 @@ public class Extraction {
 
     public long getFilePositionOffset(){
         return this.filePositionOffset;
+    }
+
+    public String getFileSize(){
+        return this.fileSize;
     }
 }
