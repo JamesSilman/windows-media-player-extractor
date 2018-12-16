@@ -38,3 +38,9 @@ The Windows Media Player database records several entires within itself for each
 
 ### Where I can find more information about the research behind how the Windows Media Player database works?
 You can find a copy of the original research by James Silman in the repo named *The Identification of Media Viewed Using Windows Media Player within Windows 7 Through the use of Cluster Analysis*
+
+### What do I do if I have issues/feature requests?
+Please open an issue on this repo. 
+
+### I have questions, who do I contact?
+Please email: james c t silman (at) gmail . com
