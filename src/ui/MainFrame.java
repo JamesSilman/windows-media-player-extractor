@@ -24,7 +24,8 @@ public class MainFrame extends JFrame{
 
     private JMenuItem csvExportOption = new JMenuItem(".csv");
 
-    private static NorthPanel np = new NorthPanel();
+    private static NorthPanel northPanel = new NorthPanel();
+    private static SouthPanel southPanel = new SouthPanel();
 
     public MainFrame(){
 
@@ -75,7 +76,12 @@ public class MainFrame extends JFrame{
         /**
          * Add the north panel
          */
-        add(np, BorderLayout.CENTER);
+        add(northPanel, BorderLayout.CENTER);
+
+        /**
+         * Add the south panel
+         */
+        add(southPanel, BorderLayout.SOUTH);
 
         /**
          *  Run menu action listener
@@ -153,7 +159,4 @@ public class MainFrame extends JFrame{
         pack();
     }
 
-    public NorthPanel getNorthPanel(){
-        return np;
-    }
 }

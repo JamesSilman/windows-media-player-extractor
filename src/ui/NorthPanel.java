@@ -30,7 +30,7 @@ public class NorthPanel extends JPanel {
         wmdbEntriesTable = new JTable(defaultTableModel);
         JScrollPane sp = new JScrollPane(wmdbEntriesTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         //wmdbEntriesTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
+        wmdbEntriesTable.setEnabled(false);
         SetVisibleRowCount(wmdbEntriesTable, 10);
 
         add(sp);
