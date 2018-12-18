@@ -12,22 +12,26 @@ import java.util.HashMap;
  *      - Add extra details
  */
 
-public class Audio extends Extraction{
+public class Audio extends BaseExtraction {
+
+    private long currentFileOffset;
 
     private ArrayList<Long> fileLocationOffsets = new ArrayList<Long>();
-
     private HashMap<String, String> entry = new HashMap<>();
 
     private String fileLocation;
-    private long currentFileOffset;
-    private String[][] fileSignatures = new String[][]{
-            {"f2","72530555"}
-    };
+    private String[][] fileSignatures = new String[][]{{"f2","72530555"}};
 
     public Audio(String fileLocation){
-        updateMessageTextArea("Starting AUDIO extraction");
 
         this.fileLocation = fileLocation;
+
+        audioExtraction();
+    }
+
+    private void audioExtraction(){
+
+        updateMessageTextArea("Starting AUDIO extraction");
 
         try{
             for(int i = 0; i < fileSignatures.length; i++) {
@@ -35,7 +39,7 @@ public class Audio extends Extraction{
                 int fileSignatureCounter = i + 1;
                 updateMessageTextArea("Starting AUDIO file header " + fileSignatureCounter + " of " + fileSignatures.length);
 
-;               fileLocationOffsets = findFileEntries(this.fileLocation, fileSignatures[i][0], fileSignatures[i][1]);
+                fileLocationOffsets = findFileEntries(this.fileLocation, fileSignatures[i][0], fileSignatures[i][1]);
 
                 updateMessageTextArea("Found " +fileLocationOffsets.size() + " AUDIO entries using header " + fileSignatureCounter + " of " + fileSignatures.length);
 
@@ -52,14 +56,9 @@ public class Audio extends Extraction{
                         updateUI();
                     }
                 }
+
             }
         }catch (Exception ioe ){ }
-
-        /**
-         for (HashMap.Entry<String, String> entry : entry.entrySet()) {
-         System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
-         }
-         */
     }
 
     private void extractFileNames(){

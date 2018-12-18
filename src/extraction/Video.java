@@ -6,23 +6,26 @@ import ui.SouthPanel;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Video extends Extraction{
+public class Video extends BaseExtraction {
+
+    private long currentFileOffset;
 
     private ArrayList<Long> fileLocationOffsets = new ArrayList<Long>();
-
     private HashMap<String, String> entry = new HashMap<>();
 
     private String fileLocation;
-    private long currentFileOffset;
-    private String[][] fileSignatures = new String[][]{
-            {"3a","000000FC3F12090E03B0FC"},
-            {"10","F813084E03B0FC"}
-    };
+    private String[][] fileSignatures = new String[][]{ {"3a","000000FC3F12090E03B0FC"}, {"10","F813084E03B0FC"}};
 
     public Video(String fileLocation){
-        updateMessageTextArea("Starting VIDEO extraction");
 
         this.fileLocation = fileLocation;
+
+        videoExtraction();
+    }
+
+    private void videoExtraction(){
+
+        updateMessageTextArea("Starting VIDEO extraction");
 
         try{
             for(int i = 0; i < fileSignatures.length; i++) {
@@ -49,12 +52,6 @@ public class Video extends Extraction{
                 }
             }
         }catch (Exception ioe ){ }
-
-        /**
-         for (HashMap.Entry<String, String> entry : entry.entrySet()) {
-         System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
-         }
-         */
     }
 
     private void extractFileNames(){

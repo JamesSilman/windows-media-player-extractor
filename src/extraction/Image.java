@@ -14,24 +14,27 @@ import java.util.HashMap;
  *      - Add extra details
  */
 
-public class Image extends Extraction{
+public class Image extends BaseExtraction {
+
+    private long currentFileOffset;
 
     private ArrayList<Long> fileLocationOffsets = new ArrayList<Long>();
-
     private HashMap<String, String> entry = new HashMap<>();
 
 
     private String fileLocation;
-    private long currentFileOffset;
-    private String[][] fileSignatures = new String[][]{
-            {"25","00000008B9"},
-            {"25","00000008B9"}
-    };
+    private String[][] fileSignatures = new String[][]{{"25","00000008B9"}, {"25","00000008B9"}};
 
     public Image(String fileLocation){
-        updateMessageTextArea("Starting IMAGE extraction");
 
         this.fileLocation = fileLocation;
+
+        imageExtraction();
+    }
+
+    private void imageExtraction(){
+
+        updateMessageTextArea("Starting IMAGE extraction");
 
         try{
             for(int i = 0; i < fileSignatures.length; i++){
@@ -53,17 +56,11 @@ public class Image extends Extraction{
                         extractFileSize();
                         extractDateAdded();
                         extractLastViewed();
-                        updateUI();
+                        updateUITableWithEntries();
                     }
                 }
             }
         }catch (Exception ioe ){ }
-
-        /**
-        for (HashMap.Entry<String, String> entry : entry.entrySet()) {
-            System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
-         }
-         */
     }
 
     private void extractFileNames(){
@@ -113,7 +110,7 @@ public class Image extends Extraction{
         entry.put("entryType", "Image");
     }
 
-    private void updateUI(){
+    private void updateUITableWithEntries(){
         NorthPanel.addRows(entry);
     }
 
