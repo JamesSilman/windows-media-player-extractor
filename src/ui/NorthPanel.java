@@ -59,8 +59,8 @@ public class NorthPanel extends JPanel {
                 entryMap.get("entryType"),
                 entryMap.get("fileName"),
                 entryMap.get("fileLocation"),
-                entryMap.get("dateAdded"),
                 entryMap.get("lastViewed"),
+                entryMap.get("dateAdded"),
 
         });
         defaultTableModel.fireTableDataChanged();

@@ -1,14 +1,14 @@
 package ui;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 public class MainFrame extends JFrame{
 
-    private String version = "0.1";
+    private String version = "0.7";
     private String applicationName = "Windows Media Player Data Extractor";
 
     private JMenuBar mainMenuBar = new JMenuBar();
@@ -16,13 +16,13 @@ public class MainFrame extends JFrame{
     private JMenu fileMenu = new JMenu("File");
     private JMenu helpMenu = new JMenu("Help");
 
-    private JMenu exportMenuItem = new JMenu("Export");
+    private JMenu exportMenuItem = new JMenu("File Selection");
     private JMenuItem exitMenuItem = new JMenuItem("Exit");
 
     private JMenuItem helpMenuItem = new JMenuItem("Help");
     private JMenuItem aboutMenuItem = new JMenuItem("About");
 
-    private JMenuItem csvExportOption = new JMenuItem(".csv");
+    private JMenuItem wmdbFileSelection = new JMenuItem("Select WMDB File");
 
     private static NorthPanel northPanel = new NorthPanel();
     private static SouthPanel southPanel = new SouthPanel();
@@ -31,14 +31,6 @@ public class MainFrame extends JFrame{
 
         MainFrame();
 
-    }
-
-    public void addText(final String txt) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                fileMenu.setText(txt);
-            }
-        });
     }
 
     private void MainFrame(){
@@ -66,7 +58,7 @@ public class MainFrame extends JFrame{
         /**
          *  Add export items to export menu
          */
-        exportMenuItem.add(csvExportOption);
+        exportMenuItem.add(wmdbFileSelection);
 
         /**
          *  Set the main menu bar
@@ -94,24 +86,24 @@ public class MainFrame extends JFrame{
         });
 
         /**
-         * Export to CSV
+         * Select the WMDB file
          */
-        csvExportOption.addActionListener(new ActionListener() {
+        wmdbFileSelection.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
 
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setDialogTitle("Specify a file to save");
+                JFileChooser chooser = new JFileChooser();
+                chooser.setDialogTitle("Select the WMP Database");
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("WMP Data Files", "wmdb");
+                chooser.setFileFilter(filter);
+                int returnVal = chooser.showOpenDialog(null);
+                if(returnVal == JFileChooser.APPROVE_OPTION) {
 
-                int userSelection = fileChooser.showSaveDialog(null);
-
-                if (userSelection == JFileChooser.APPROVE_OPTION) {
-                    File fileToSave = fileChooser.getSelectedFile();
+                    new Extract(chooser.getSelectedFile().getAbsolutePath());
 
                 }
             }
         });
-
 
         /**
          *  Exit menu action listener
