@@ -4,6 +4,8 @@ Forensic application to extract intelligence from Windows Media Player databases
 
 The Windows Media Player Database Extractor (WMPDE) extracts the following information from the Windows Media Player databse
 
+![WMP Extractor Screenshot](https://github.com/JamesSilman/windows-media-player-extractor/blob/master/wmpdb-extractor.png)
+
 ### Audio
 - File Name
 - File Location
