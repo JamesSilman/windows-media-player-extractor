@@ -36,7 +36,7 @@ The Windows Media Player Database Extractor (WMPDE) extracts the following infor
 ## FAQ
 
 ### Why do I get multiple results for the same file?
-The Windows Media Player database records several entires within itself for each file. It's not know why this is the case as there's no documentation from Microsoft.
+The Windows Media Player database records several entires within itself for each file. It's not known why this is the case as there's no documentation from Microsoft.
 
 ### Where I can find more information about the research behind how the Windows Media Player database works?
 You can find a copy of the original research by James Silman in the repo named *The Identification of Media Viewed Using Windows Media Player within Windows 7 Through the use of Cluster Analysis*
