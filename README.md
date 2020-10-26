@@ -1,4 +1,4 @@
-# Windows Media Database Extractor 
+# Windows Media Player Database Extractor 
 
 Forensic application to extract intelligence from Windows Media Player databases on Windows 7, 8 and 10
 
